@@ -14,18 +14,28 @@
 
         <nav class="flex justify-between p-6 items-center bg-white shadow-md mt-3">
             <div class="text-xl font-bold">
-                <a href="{{route('home')}}">Logo</a>
+                <a href="{{ route('home') }}">Logo</a>
             </div>
             <div>
-                <ul class="flex space-x-6 text-lg">
-                    <li><a href="{{route('home')}}" class="hover:text-blue-500">Home</a></li>
-                    <li><a href="{{route('user.index')}}" class="hover:text-blue-500">Users</a></li>
-                    <li><a href="{{route("categories.index")}}" class="hover:text-blue-500">Categories</a></li>
-                </ul>
-            </div>
-            <div class="flex space-x-6">
-                <a href="{{route('login')}}" class="text-lg hover:text-blue-500">Login</a>
-                <a href="{{route('register')}}" class="text-lg hover:text-blue-500">Register</a>
+                @auth
+                    <ul class="flex space-x-6 text-lg">
+                        <li><a href="{{ route('home') }}" class="hover:text-blue-500">Home</a></li>
+                        <li><a href="{{ route('user.index') }}" class="hover:text-blue-500">Users</a></li>
+                        <li><a href="{{ route('categories.index') }}" class="hover:text-blue-500">Categories</a></li>
+                    </ul>
+                    @endauth
+                </div>
+                <div class="flex space-x-6">
+                @auth
+                <form action="{{route('logout')}}" method="post">
+                    @csrf
+                    <button type="submit" class="text-lg hover:text-blue-500">Logout</button>
+                </form>
+                @endauth
+                @guest
+                    <a href="{{ route('login') }}" class="text-lg hover:text-blue-500">Login</a>
+                    <a href="{{ route('register') }}" class="text-lg hover:text-blue-500">Register</a>
+                @endguest
             </div>
         </nav>
 
