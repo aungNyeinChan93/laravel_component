@@ -1,6 +1,13 @@
 <x-master>
 
     <div class="px-8">
+        @if (session('success'))
+        <div class="px-8 py-4 bg-green-100 text-green-700 rounded-lg mb-4">
+            {{ session('success') }}
+        </div>
+    @endif
+    </div>
+    <div class="px-8">
         <x-heading>
             Products List
         </x-heading>
