@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Jobs\ProductCreateJob;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ProductController extends Controller
 {
@@ -36,6 +39,7 @@ class ProductController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Product::class);
         $categories = Category::all();
         return view('product.create', compact('categories'));
     }
@@ -65,7 +69,10 @@ class ProductController extends Controller
         }
         $fields['user_id'] = Auth::id();
 
-        Product::create($fields);
+        $product = Product::create($fields);
+        $user = Auth::user();
+
+        ProductCreateJob::dispatch($user,$product);
 
         return redirect()->route('products.index')->with('success', 'Product created successfully');
     }
@@ -77,6 +84,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        Gate::authorize('update', $product);
         $categories = Category::all();
         return view('product.edit', compact('product', 'categories'));
     }
@@ -125,6 +133,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        Gate::authorize('delete', $product);
         $product->delete();
         return redirect()->route('products.index')->with('success', 'Product deleted successfully');
     }

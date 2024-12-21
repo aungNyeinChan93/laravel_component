@@ -37,3 +37,10 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
 });
+
+Route::group(["prefix"=>'test'],function(){
+    Route::get('queue',function(){
+        \App\Jobs\TestJob::dispatch();
+        return "Product created";
+    });
+});

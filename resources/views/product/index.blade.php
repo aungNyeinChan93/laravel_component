@@ -12,9 +12,11 @@
             Products List
         </x-heading>
 
+        @auth
         <div class="flex justify-end mt-4">
             <a href="{{route('products.create')}}" class="px-3 py-1 bg-green-400 hover:bg-green-500 rounded-xl text-white">Add Product</a>
         </div>
+        @endauth
     </div>
     <div class="grid grid-cols-4 gap-4 PX-6 px-4  my-3">
         @foreach ($products as $product)
