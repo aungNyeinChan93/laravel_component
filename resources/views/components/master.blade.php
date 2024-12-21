@@ -22,6 +22,7 @@
                         <li><a href="{{ route('home') }}" class="hover:text-blue-500">Home</a></li>
                         <li><a href="{{ route('user.index') }}" class="hover:text-blue-500">Users</a></li>
                         <li><a href="{{ route('categories.index') }}" class="hover:text-blue-500">Categories</a></li>
+                        <li><a href="{{ route('products.index') }}" class="hover:text-blue-500">Products</a></li>
                     </ul>
                     @endauth
                 </div>
@@ -49,4 +50,17 @@
     </div>
 </body>
 
+
+<script>
+
+    function loadFile(event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            let image = document.getElementById("imagePreview");
+            image.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+</script>
 </html>

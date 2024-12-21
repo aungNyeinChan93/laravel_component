@@ -1,0 +1,38 @@
+<x-master>
+
+    <div class="px-8">
+        <x-heading>
+            Products List
+        </x-heading>
+
+        <div class="flex justify-end mt-4">
+            <a href="{{route('products.create')}}" class="px-3 py-1 bg-green-400 hover:bg-green-500 rounded-xl text-white">Add Product</a>
+        </div>
+    </div>
+    <div class="grid grid-cols-4 gap-4 PX-6 px-4  my-3">
+        @foreach ($products as $product)
+            <x-card >
+                <x-slot name="header">
+                    <h1 class="text-xl font-bold">{{$product->title}}</h1>
+                </x-slot>
+                <x-slot name="slot">
+                    <a href="{{route('products.show',$product->id)}}">
+                        <img src="{{asset('storage/'.$product->image)}}" alt="product" class=" block w-full h-[300px] rounded-xl p-2 object-cover border border-transparent hover:border-red-700">
+                    </a>
+                    <p class="text-gray-700 mt-4"><a href="{{route('products.show',$product->id)}}">{{Str::limit($product->description, 20, ' ... ')}}</a></p>
+
+                </x-slot>
+                <x-slot name="footer" >
+                    <div class="flex justify-between items-center">
+                        <p class="text-gray-700">Price: ${{$product->price}}</p>
+                        <span class="px-3 py-1 rounded bg-red-400 text-white">{{$product->category->name}}</span>
+                    </div>
+                </x-slot>
+            </x-card>
+        @endforeach
+    </div>
+    <div class="px-8">
+        {{$products->links()}}
+    </div>
+
+</x-master>
