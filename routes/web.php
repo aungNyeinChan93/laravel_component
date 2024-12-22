@@ -44,3 +44,8 @@ Route::group(["prefix"=>'test'],function(){
         return "Product created";
     });
 });
+
+
+Route::get('php',function(){
+    phpinfo();
+});

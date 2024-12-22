@@ -12,13 +12,13 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class ProductCreateJob implements ShouldQueue
 {
     use Queueable;
-
+    //public User $user;
     /**
      * Create a new job instance.
      */
     public function __construct(public User $user , public Product $product)
     {
-        //
+        //$this->user = $user;
     }
 
     /**

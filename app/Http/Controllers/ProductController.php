@@ -16,9 +16,18 @@ class ProductController extends Controller
      * Summary of index
      * @return \Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::latest()->simplePaginate(10);
+        // if ($request->search) {
+        //     $products = Product::where('title', 'like', '%' . $request->search . '%')->simplePaginate(10);
+        //     return view('product.index', compact('products'));
+        // }
+        // $products = Product::latest()->simplePaginate(10);
+        // return view('product.index', compact('products'));
+
+        $products = Product::when($request->search, function ($query) use ($request) {
+            $query->whereAny(['title', 'price', 'stock'], 'like', '%' . $request->search . '%');
+        })->orderBy("created_at", 'desc')->get();
         return view('product.index', compact('products'));
     }
 
@@ -56,8 +65,8 @@ class ProductController extends Controller
             'title' => 'required',
             'description' => 'required',
             'price' => 'required',
-            'image' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'category_id' => 'required',
+            'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category_id' => 'required|exists:categories,id',
             'stock' => 'required',
 
         ]);
@@ -72,7 +81,7 @@ class ProductController extends Controller
         $product = Product::create($fields);
         $user = Auth::user();
 
-        ProductCreateJob::dispatch($user,$product);
+        ProductCreateJob::dispatch($user, $product);
 
         return redirect()->route('products.index')->with('success', 'Product created successfully');
     }

@@ -14,6 +14,11 @@
 
         @auth
         <div class="flex justify-end mt-4">
+            <form action="{{route('products.index')}}" method="GET">
+                @csrf
+                <input value="{{request()->search}}" type="text" name="search" class="px-3 mx-1 py-1 border border-gray-300 rounded-xl" placeholder="Search">
+                <button type="submit" class="px-3 py-1 bg-blue-400 hover:bg-blue-500 rounded-xl text-white me-4">Search</button>
+            </form>
             <a href="{{route('products.create')}}" class="px-3 py-1 bg-green-400 hover:bg-green-500 rounded-xl text-white">Add Product</a>
         </div>
         @endauth
@@ -41,7 +46,7 @@
         @endforeach
     </div>
     <div class="px-8">
-        {{$products->links()}}
+        {{-- {{$products->links()}} --}}
     </div>
 
 </x-master>

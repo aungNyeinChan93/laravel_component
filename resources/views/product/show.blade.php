@@ -11,7 +11,7 @@
                 <x-slot name="slot">
                     <a href="">
                         <img src="{{ asset("storage/$product->image") }}" alt="product"
-                            class=" block w-full h-[500px] rounded-xl p-2 object-cover border border-transparent hover:border-red-700">
+                            class=" block w-full h-[500px] rounded-xl p-2 object-contain border border-transparent hover:border-red-700">
                     </a>
                     <p class="text-gray-700 mt-4"><a href="">{{ $product->description }}</a></p>
                 </x-slot>
