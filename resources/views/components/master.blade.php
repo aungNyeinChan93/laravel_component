@@ -27,12 +27,22 @@
                     @endauth
                 </div>
                 <div class="flex space-x-6">
+
+                @auth
+                    <form action="{{route('products.search')}}" method="GET">
+                        @csrf
+
+                        <input type="text" name="search" id="search" class="px-3 mx-1 py-1 border border-gray-300 rounded-xl" placeholder="Search">
+                    </form>
+                @endauth
+
                 @auth
                 <form action="{{route('logout')}}" method="post">
                     @csrf
                     <button type="submit" class="text-lg hover:text-blue-500">Logout</button>
                 </form>
                 @endauth
+
                 @guest
                     <a href="{{ route('login') }}" class="text-lg hover:text-blue-500">Login</a>
                     <a href="{{ route('register') }}" class="text-lg hover:text-blue-500">Register</a>

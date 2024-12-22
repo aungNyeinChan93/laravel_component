@@ -27,7 +27,7 @@ class ProductController extends Controller
 
         $products = Product::when($request->search, function ($query) use ($request) {
             $query->whereAny(['title', 'price', 'stock'], 'like', '%' . $request->search . '%');
-        })->orderBy("created_at", 'desc')->get();
+        })->latest()->simplePaginate(12);
         return view('product.index', compact('products'));
     }
 
@@ -145,5 +145,18 @@ class ProductController extends Controller
         Gate::authorize('delete', $product);
         $product->delete();
         return redirect()->route('products.index')->with('success', 'Product deleted successfully');
+    }
+
+    /**
+     * Summary of search
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function search(Request $request){
+        $products = Product::when($request->search, function ($query) use ($request) {
+            $query->whereAny(['title', 'price', 'stock'], 'like', '%' . $request->search . '%');
+        })->latest()->get();
+
+        return view('product.search', compact('products'));
     }
 }

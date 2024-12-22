@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\User;
+use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
@@ -28,6 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
     // products
     Route::group(["prefix"=>"products"],function(){
         Route::get('/', [ProductController::class, 'index'])->name('products.index');
+        Route::get('search', [ProductController::class, 'search'])->name('products.search');
         Route::get('create', [ProductController::class, 'create'])->name('products.create');
         Route::post('create', [ProductController::class, 'store'])->name('products.store');
         Route::get('edit/{product}', [ProductController::class, 'edit'])->name('products.edit');
@@ -49,3 +52,7 @@ Route::group(["prefix"=>'test'],function(){
 Route::get('php',function(){
     phpinfo();
 });
+
+Route::get('test/search',function(Request $request){
+    dd('hit');
+})->name('test.search');

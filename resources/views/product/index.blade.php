@@ -46,7 +46,7 @@
         @endforeach
     </div>
     <div class="px-8">
-        {{-- {{$products->links()}} --}}
+        {{$products->links()}}
     </div>
 
 </x-master>
